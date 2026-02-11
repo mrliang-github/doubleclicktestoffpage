@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Click Test - Offline Edition</title>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; text-align: center; padding: 50px; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { margin-bottom: 20px; color: #0070f3; }
+        .click-area {
+            background-color: #0070f3; color: white; padding: 40px; border-radius: 8px; font-size: 24px; cursor: pointer; user-select: none; transition: transform 0.1s, background-color 0.2s;
+        }
+        .click-area:active { transform: scale(0.98); background-color: #0051a2; }
+        .stats { margin-top: 20px; font-size: 18px; display: flex; justify-content: space-around; }
+        .reset-btn { margin-top: 20px; padding: 10px 20px; border: none; background: #eaeaea; color: #555; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .reset-btn:hover { background: #ddd; }
+        .note { margin-top: 30px; font-size: 12px; color: #888; }
+        a { color: #0070f3; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Click Counter</h1>
+        <p>A lightweight, offline tool to test your mouse buttons.</p>
+        
+        <div class="click-area" id="clickArea" onclick="countClick()">
+            CLICK HERE
+        </div>
+
+        <div class="stats">
+            <div>Clicks: <span id="count">0</span></div>
+            <div>High Score: <span id="highScore">0</span></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetCount()">Reset Counter</button>
+
+        <p class="note">
+            Need more advanced features like CPS test or double-click detection? <br>
+            Visit the <a href="https://doubleclicktest.xyz/" target="_blank">Online Pro Version</a>.
+        </p>
+    </div>
+
+    <script>
+        let clicks = 0;
+        let highScore = localStorage.getItem('simpleClickTest_highScore') || 0;
+        document.getElementById('highScore').innerText = highScore;
+
+        function countClick() {
+            clicks++;
+            document.getElementById('count').innerText = clicks;
+            
+            if (clicks > highScore) {
+                highScore = clicks;
+                localStorage.setItem('simpleClickTest_highScore', highScore);
+                document.getElementById('highScore').innerText = highScore;
+            }
+        }
+
+        function resetCount() {
+            clicks = 0;
+            document.getElementById('count').innerText = 0;
+        }
+    </script>
+</body>
+</html>
